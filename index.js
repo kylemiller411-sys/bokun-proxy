@@ -6,28 +6,26 @@ import serverless from "serverless-http";
 const app = express();
 app.use(express.json());
 
-// 🔴 CHANGE THESE TO YOUR REAL KEYS
-const BOKUN_ACCESS_KEY = "YOUR_BOKUN_ACCESS_KEY";
-const BOKUN_SECRET_KEY = "YOUR_BOKUN_SECRET_KEY";
+const BOKUN_ACCESS_KEY = "ba609852b16b4a809ead8400f0a71c79";
+const BOKUN_SECRET_KEY = "df3da766cf4a4ed5baf4c49ac6916077";
 
-// 🔴 MAKE UP A SECRET (use the same in GPT Builder → Auth)
 const PROXY_KEY = "AFoxGPT2025Secret!";
 
 const BOKUN_BASE = "https://api.bokun.io";
 
-// ✅ Helper: UTC date in Bokun format
+// Helper: UTC date in Bokun format
 function bokunDate() {
   const now = new Date();
   return now.toISOString().slice(0, 19).replace("T", " ");
 }
 
-// ✅ Helper: HMAC-SHA1 signature
+// Helper: HMAC-SHA1 signature
 function bokunSign(method, path, date, secret) {
   const stringToSign = date + method.toUpperCase() + path;
   return crypto.createHmac("sha1", secret).update(stringToSign).digest("base64");
 }
 
-// ✅ Middleware: check proxy key
+// Middleware: check proxy key
 app.use((req, res, next) => {
   if (req.headers["x-proxy-key"] !== PROXY_KEY) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -35,7 +33,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Root route (help message)
+// Root route (help)
 app.get("/", (req, res) => {
   if (!req.query.action) {
     return res.json({
@@ -49,7 +47,7 @@ app.get("/", (req, res) => {
   res.status(400).json({ error: "Invalid action" });
 });
 
-// ✅ Availability endpoint
+// Availability endpoint
 app.get("/", async (req, res, next) => {
   if (req.query.action !== "availability") return next();
 
@@ -78,7 +76,7 @@ app.get("/", async (req, res, next) => {
   }
 });
 
-// ✅ Booking endpoint
+// Booking endpoint
 app.post("/", async (req, res, next) => {
   if (req.query.action !== "book") return next();
 
