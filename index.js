@@ -4,7 +4,6 @@ import serverless from "serverless-http";
 const app = express();
 app.use(express.json());
 
-// 🔴 Same proxy key you use in GPT Builder
 const PROXY_KEY = "AFoxGPT2025Secret!";
 
 // ✅ Middleware: check proxy key
