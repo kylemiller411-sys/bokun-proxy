@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 // ✅ Your real keys
-const BOKUN_ACCESS_KEY = "ba609852b16b4a809ead8400f0a71c36";
+const BOKUN_ACCESS_KEY = "ba609852b16b4a809ead8400f0a71c79";
 const BOKUN_SECRET_KEY = "df3da766cf4a4ed5baf4c49ac6916077";
 
 // ✅ Proxy key (must match GPT Builder Auth)
